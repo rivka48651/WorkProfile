@@ -38,5 +38,13 @@ def add():
     app.logger.error("Request body is empty")
     return Response(status=404)
 
+@app.route("/health")
+def health():
+    status = health_check()  # פונקציה קיימת ב-dbcontext, אם לא – תכתבי לבד בדיקה פשוטה
+    if status:
+        return {"status": "healthy"}, 200
+    else:
+        return {"status": "unhealthy"}, 503
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
