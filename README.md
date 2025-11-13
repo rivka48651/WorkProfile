@@ -1,113 +1,134 @@
-# WorkProfile Advanced CI/CD Project
+WorkProfile – CI/CD Pipeline & 3-Tier Deployment
 
-This repository contains the advanced WorkProfile project with a complete CI/CD pipeline, Docker Compose 3-tier stack, and testing via Killercoda.
+WorkProfile is a Flask-based web application demonstrating a complete CI/CD workflow and multi-tier containerized deployment.
+It showcases automated build, testing, and delivery processes using GitHub Actions, Docker, Nginx, MySQL, and Kubernetes.
 
----
+🚀 Highlights
 
-## Repository Structure
+✅ Full CI/CD pipeline with GitHub Actions
 
-- `.github/workflows/ci-cd-pipeline.yml` — GitHub Actions workflow.
-- `docker-compose/docker-compose.yml` — Docker Compose 3-tier stack configuration.
-- `docker-compose/nginx.conf` — Nginx configuration.
-- `src/` — Application source code.
-- `Dockerfile` — Docker image build instructions.
-- `requirements.txt` — Python dependencies.
-- `README.md` — Project documentation (this file).
+🐳 3-tier Docker Compose stack (Nginx → Flask → MySQL)
 
----
+☸️ Kubernetes StatefulSet tested in Killercoda
 
-## CI/CD Pipeline (GitHub Actions)
+🔍 Automated endpoint & database validation using curl
 
-The workflow includes six stages:
+💾 Persistent MySQL storage with health checks
 
-1. **Validation**
-   - Checks required files exist (Dockerfile, requirements.txt, app.py).
-   - Validates Python dependencies (Flask, MySQL connector).
+📸 Screenshots & diagrams included for verification
 
-2. **Build & Single Container Test**
-   - Builds Docker image.
-   - Runs WorkProfile container.
-   - Tests root and health endpoints using `curl`.
-   - Pushes image to GitHub Container Registry.
+🗂️ Repository Structure
+.github/workflows/ci-cd-pipeline.yml   # GitHub Actions workflow
+docker-compose/docker-compose.yml      # 3-tier stack configuration
+docker-compose/nginx.conf              # Nginx reverse proxy config
+src/                                   # Application source code
+Dockerfile                             # Docker image build instructions
+requirements.txt                       # Python dependencies
+README.md                              # Project documentation (this file)
 
-3. **3-Tier Docker Compose Test**
-   - Starts 3-tier stack: Nginx → WorkProfile → MySQL.
-   - Waits for MySQL to be ready.
-   - Tests endpoints through Nginx.
-   - Tests database connectivity.
-   - Shuts down stack after tests.
+⚙️ CI/CD Pipeline (GitHub Actions)
 
-4. **Publish**
-   - Pushes Docker image to registry with proper tags.
+The workflow is divided into six stages:
 
-5. **Kubernetes Deployment Testing**
-   - Manual testing in Killercoda (StatefulSet, NodePort, CRUD operations).
+1. Validation
 
-6. **Manual Deployment Instructions**
-   - Detailed Killercoda deployment steps.
-   - Verification procedures for StatefulSet and persistent storage.
+Verifies required files exist: Dockerfile, requirements.txt, app.py.
 
----
+Validates Python dependencies (Flask, mysql-connector-python).
 
-## Docker Compose Setup
+2. Build & Single-Container Test
 
-- **3-tier stack:**
-  - Nginx as reverse proxy/load balancer (port 8081).
-  - WorkProfile application (port 5000).
-  - MySQL database with persistent volume.
-- **Environment variables:**
-  - `DB_HOST=mysql`
-  - `DB_USER=flaskapp`
-  - `DB_PASS=flaskapp`
-  - `DB_NAME=exampleDb`
-- MySQL data persists in volume `mysql-data`.
-- Healthcheck ensures MySQL is ready before WorkProfile starts.
+Builds the Docker image.
 
----
+Runs the WorkProfile container.
 
-## Running Locally with Docker Compose
+Tests / and /health endpoints via curl.
 
-```bash
+Pushes the image to GitHub Container Registry.
+
+3. 3-Tier Docker Compose Test
+
+Launches full stack: Nginx → WorkProfile → MySQL.
+
+Waits for MySQL readiness.
+
+Tests endpoints through Nginx proxy.
+
+Validates database connectivity.
+
+Shuts down the stack after successful tests.
+
+4. Publish
+
+Pushes Docker image to the registry with versioned tags.
+
+5. Kubernetes Deployment Testing (Manual)
+
+Performed in Killercoda:
+
+Deploys StatefulSet with persistent storage.
+
+Verifies CRUD operations and NodePort access.
+
+Confirms data persistence after pod restarts.
+
+6. Reflection & Documentation
+
+Includes screenshots and diagrams:
+
+✅ Successful GitHub Actions run
+
+🌐 App running via Nginx
+
+🗄️ CRUD operations in MySQL
+
+☸️ StatefulSet & PVC status in Kubernetes
+
+🧩 Workflow and architecture diagrams
+
+🐳 Docker Compose Setup
+
+Architecture:
+
+Nginx – Reverse proxy / load balancer (port 8081)
+
+WorkProfile – Flask app (port 5000)
+
+MySQL – Database with persistent volume
+
+Environment Variables:
+
+DB_HOST=mysql
+DB_USER=flaskapp
+DB_PASS=flaskapp
+DB_NAME=exampleDb
+
+
+MySQL data is stored in a named Docker volume (mysql-data), and a healthcheck ensures MySQL is ready before the app starts.
+
+💻 Run Locally with Docker Compose
 cd docker-compose
 docker-compose up -d
 sleep 60
 curl http://localhost:8081/
 curl http://localhost:8081/health
+
+
 Shutdown:
 
-bash
-Copy
-Edit
 docker-compose down -v
-Killercoda (Manual Kubernetes Testing)
-MySQL StatefulSet runs with persistent storage.
 
-WorkProfile application deployed and accessible via NodePort.
+☸️ Killercoda (Manual Kubernetes Testing)
 
-CRUD operations work correctly.
+MySQL deployed as StatefulSet with persistent volume.
 
-Data persists after pod restarts.
+Flask app exposed via NodePort.
 
-Screenshots & Documentation
-Include screenshots and diagrams in your final submission:
+Full CRUD functionality verified.
 
-GitHub Actions pipeline run success.
+Data remains intact after pod restarts.
 
-Application running in browser via Nginx.
+🧠 Reflection
 
-Database CRUD operations working.
-
-StatefulSet and PVC status in Killercoda.
-
-Workflow diagram of all 6 stages.
-
-Docker Compose 3-tier architecture diagram.
-
-Reflection on simplified CI/CD testing experience.
-
-Notes
-GitHub Actions workflow does not deploy Kubernetes; manifests and deployment are tested manually in Killercoda.
-
-CI/CD tests are simplified using curl.
-
-Docker Compose network ensures proper communication between Nginx, WorkProfile, and MySQL.
+This project demonstrates an end-to-end DevOps workflow — from source code validation and Dockerization to multi-container orchestration and Kubernetes deployment testing.
+It provides a hands-on example of modern CI/CD automation and containerized infrastructure in action.
