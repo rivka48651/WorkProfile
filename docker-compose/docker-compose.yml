@@ -15,10 +15,10 @@ services:
     ports:
       - "3308:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass"]
+      test: ["CMD-SHELL", "mysql -uflaskapp -pflaskapp -e 'SELECT 1;' exampleDb || exit 1"]
       interval: 10s
-      retries: 20
-      timeout: 10s
+      retries: 5
+      timeout: 5s
 
   workprofile:
     build: ../
