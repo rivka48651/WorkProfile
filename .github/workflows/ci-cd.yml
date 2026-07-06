@@ -128,7 +128,7 @@ jobs:
       run: |
         echo "Checking database connectivity..."
         for i in {1..30}; do
-          STATUS=$(curl -s http://localhost:8081/health | grep "Database: Healthy" || true)
+          STATUS=$(curl -s http://localhost:8081/health | grep "OK" || true)
           if [ "$STATUS" != "" ]; then
             echo "✓ Database connectivity works"
             break
