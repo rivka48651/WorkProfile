@@ -170,4 +170,3 @@ jobs:
         tags: |
           ghcr.io/${{ github.repository_owner }}/workprofile:latest
           ghcr.io/${{ github.repository_owner }}/workprofile:${{ github.sha }}
-# trigger rebuild
